@@ -1,0 +1,37 @@
+﻿<h1>Devices</h1>
+<a routerLink="add" class="btn btn-sm btn-success mb-2">Add Device</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th style="width: 15%">Serial Number</th>
+            <th style="width: 15%">Firmware Version</th>
+            <th style="width: 15%">Device Type</th>
+            <th style="width: 15%">State</th>
+            <th style="width: 15%">IP</th>
+            <th style="width: 15%">Port</th>
+            <th style="width: 10%"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let device of devices">
+            <td>{{device.serialNumber}}</td>
+            <td>{{device.firmwareVersion}}</td>
+            <td>{{device.deviceType}}</td>
+            <td>{{device.state}}</td>
+            <td>{{device.ip}}</td>
+            <td>{{device.port}}</td>
+            <td style="white-space: nowrap">
+                <a routerLink="edit/{{device.id}}" class="btn btn-sm btn-primary mr-1">Edit</a>
+                <button (click)="deleteDevice(device.id)" class="btn btn-sm btn-danger btn-delete-device" [disabled]="device.isDeleting">
+                    <span *ngIf="device.isDeleting" class="spinner-border spinner-border-sm"></span>
+                    <span *ngIf="!device.isDeleting">Delete</span>
+                </button>
+            </td>
+        </tr>
+        <tr *ngIf="!devices">
+            <td colspan="7" class="text-center">
+                <span class="spinner-border spinner-border-lg align-center"></span>
+            </td>
+        </tr>
+    </tbody>
+</table>

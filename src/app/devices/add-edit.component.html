@@ -1,0 +1,53 @@
+﻿<h1 *ngIf="isAddMode">Add Device</h1>
+<h1 *ngIf="!isAddMode">Edit Device</h1>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-row">
+        <div class="form-group col">
+            <label>Device Type</label>
+            <select (change)="changeDeviceType($event.target.value)" formControlName="deviceType" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.deviceType.errors }">
+                <option value=""></option>
+                <option value="ElectricMeter">Electric Meter</option>
+                <option value="WaterMeter">Water Meter</option>
+                <option value="Gateway">Gateway</option>
+            </select>
+            <div *ngIf="submitted && f.deviceType.errors" class="invalid-feedback">
+                <div *ngIf="f.deviceType.errors.required">Device type is required</div>
+            </div>
+        </div>
+        <div class="form-group col-5">
+            <label>Serial number</label>
+            <input type="text" formControlName="serialNumber" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.serialNumber.errors }" />
+            <div *ngIf="submitted && f.serialNumber.errors" class="invalid-feedback">
+                <div *ngIf="f.serialNumber.errors.required">Serial number is required</div>
+            </div>
+        </div>
+        <div class="form-group col-5">
+            <label>Firmware version</label>
+            <input type="text" formControlName="firmwareVersion" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.firmwareVersion.errors }" />
+            <div *ngIf="submitted && f.firmwareVersion.errors" class="invalid-feedback">
+                <div *ngIf="f.firmwareVersion.errors.required">Firmware version is required</div>
+            </div>
+        </div>
+        <div class="form-group col-5">
+            <label>State</label>
+            <input type="text" formControlName="state" class="form-control" />
+        </div>
+    </div>
+    <div class="form-row" *ngIf="deviceType == 'Gateway'">
+        <div class="form-group col-7">
+            <label>IP</label>
+            <input type="text" formControlName="ip" class="form-control" />
+        </div>
+        <div class="form-group col">
+            <label>Port</label>
+            <input type="number" formControlName="port" class="form-control" />
+        </div>
+    </div>
+    <div class="form-group">
+        <button [disabled]="loading" class="btn btn-primary">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Save
+        </button>
+        <a routerLink="/devices" class="btn btn-link">Cancel</a>
+    </div>
+</form>
